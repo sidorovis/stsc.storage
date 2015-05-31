@@ -11,10 +11,10 @@ public class AlgorithmsStorageTest {
 
 	@Test
 	public void testAlgorithmNamesStorage() throws BadAlgorithmException {
-
 		final AlgorithmsStorage ans = AlgorithmsStorage.getInstance();
 		Assert.assertNotNull(ans.getStock(".Sma"));
 		Assert.assertNotNull(ans.getStock(".Ema"));
+		Assert.assertNotNull(ans.getEod(".Sma"));
 		Assert.assertNull(ans.getEod("TestingEodAlgorithm"));
 		Assert.assertNull(ans.getStock("StockAlgorithmHelper"));
 		Assert.assertNotNull(ans.getEod("SimpleTradingAlgorithm"));
@@ -23,8 +23,8 @@ public class AlgorithmsStorageTest {
 			ans.getStock("IN");
 			Assert.fail("For 'IN' we could assume to find several algorithms.");
 		} catch (BadAlgorithmException e) {
-			Assert.assertTrue(Pattern.matches(
-					"For 'IN' we could assume:stsc.algorithms.stock.indices.(.+) or stsc.algorithms.stock.indices.(.+)", e.getMessage()));
+			Assert.assertTrue(Pattern.matches("For 'IN' we could assume:stsc.algorithms.stock.indices.(.+) or stsc.algorithms.stock.indices.(.+)",
+					e.getMessage()));
 		}
 	}
 
