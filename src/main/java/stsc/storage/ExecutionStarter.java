@@ -1,5 +1,6 @@
 package stsc.storage;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,8 @@ public final class ExecutionStarter {
 	private final SignalsStorage signalsStorage = new SignalsStorageImpl();
 
 	private final StockNameToAlgorithms stockAlgorithms = new StockNameToAlgorithms();
-	private final Map<String, EodAlgorithm> tradeAlgorithms = new HashMap<>();
+	private final Map<String, EodAlgorithm> tradeNameToAlgorithms = new HashMap<>();
+	private final List<EodAlgorithm> tradeAlgorithms = new ArrayList<>();
 
 	private final String hashCode;
 
@@ -36,7 +38,8 @@ public final class ExecutionStarter {
 		}
 		for (EodExecution execution : eodExecutions) {
 			final EodAlgorithm algo = execution.getInstance(broker, signalsStorage);
-			tradeAlgorithms.put(execution.getExecutionName(), algo);
+			tradeAlgorithms.add(algo);
+			tradeNameToAlgorithms.put(execution.getExecutionName(), algo);
 		}
 		this.hashCode = generateHashCode(stockExecutions, eodExecutions);
 	}
@@ -46,8 +49,8 @@ public final class ExecutionStarter {
 	}
 
 	public void runEodAlgorithms(final Date today, final HashMap<String, Day> datafeed) throws BadSignalException {
-		for (Map.Entry<String, EodAlgorithm> i : tradeAlgorithms.entrySet()) {
-			i.getValue().process(today, datafeed);
+		for (EodAlgorithm i : tradeAlgorithms) {
+			i.process(today, datafeed);
 		}
 	}
 
@@ -56,11 +59,7 @@ public final class ExecutionStarter {
 	}
 
 	public EodAlgorithm getEodAlgorithm(final String key) {
-		return tradeAlgorithms.get(key);
-	}
-
-	public Set<String> getEodAlgorithmNames() {
-		return tradeAlgorithms.keySet();
+		return tradeNameToAlgorithms.get(key);
 	}
 
 	public int getStockAlgorithmsSize() {
@@ -83,8 +82,8 @@ public final class ExecutionStarter {
 
 	@Override
 	public String toString() {
-		return "Stocks: " + Integer.toString(stockAlgorithms.size()) + " EodAlgos: " + Integer.toString(tradeAlgorithms.size())
-				+ " StockAlgos:" + Integer.toString(stockAlgorithms.size());
+		return "Stocks: " + Integer.toString(stockAlgorithms.size()) + " EodAlgos: " + Integer.toString(tradeAlgorithms.size()) + " StockAlgos:"
+				+ Integer.toString(stockAlgorithms.size());
 	}
 
 	private String generateHashCode(List<StockExecution> stockExecutions, List<EodExecution> eodExecutions) {
