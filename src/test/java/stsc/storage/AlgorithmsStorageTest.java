@@ -14,7 +14,7 @@ public class AlgorithmsStorageTest {
 		final AlgorithmsStorage ans = AlgorithmsStorage.getInstance();
 		Assert.assertNotNull(ans.getStock(".Sma"));
 		Assert.assertNotNull(ans.getStock(".Ema"));
-		//Assert.assertNotNull(ans.getEod(".Sma"));
+		Assert.assertNotNull(ans.getEod(".Sma"));
 		Assert.assertNull(ans.getEod(".TestingEodAlgorithm"));
 		Assert.assertNull(ans.getStock("StockAlgorithmHelper"));
 		Assert.assertNotNull(ans.getEod("SimpleTradingAlgorithm"));
