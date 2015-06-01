@@ -14,6 +14,12 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.StockAlgorithm;
 
+/**
+ * Store {@link StockAlgorithm}s and {@link EodAlgorithm}s loading them with
+ * reflection (ClassLoader.getSystemClassLoader()). Default package to search:
+ * stsc.algorithm, feel free to instance that with any different package.
+ * 
+ */
 public final class AlgorithmsStorage {
 
 	private String containerPackageName = "stsc.algorithm";
@@ -104,8 +110,7 @@ public final class AlgorithmsStorage {
 				if (result == null) {
 					result = i.getValue();
 				} else {
-					throw new BadAlgorithmException("For '" + algorithmName + "' we could assume:" + result.getName() + " or "
-							+ i.getValue().getName());
+					throw new BadAlgorithmException("For '" + algorithmName + "' we could assume:" + result.getName() + " or " + i.getValue().getName());
 				}
 			}
 		}
