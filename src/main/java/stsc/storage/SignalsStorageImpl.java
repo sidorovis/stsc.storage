@@ -34,8 +34,7 @@ public class SignalsStorageImpl implements SignalsStorage {
 	}
 
 	@Override
-	public void addStockSignal(final String stockName, final String executionName, final Date date, final SerieSignal signal)
-			throws BadSignalException {
+	public void addStockSignal(final String stockName, final String executionName, final Date date, final SerieSignal signal) throws BadSignalException {
 		final String key = stockAlgorithmKey(stockName, executionName);
 		synchronized (stockSignals) {
 			stockSignals.get(key).addSignal(date, signal);
@@ -49,8 +48,12 @@ public class SignalsStorageImpl implements SignalsStorage {
 		synchronized (stockSignals) {
 			ess = stockSignals.get(key);
 		}
-		if (ess != null)
-			return ess.getSignal(date);
+		if (ess != null) {
+			final SignalContainer<? extends SerieSignal> result = ess.getSignal(date);
+			if (result != null) {
+				return result;
+			}
+		}
 		return SignalContainer.empty(date);
 	}
 
@@ -61,8 +64,12 @@ public class SignalsStorageImpl implements SignalsStorage {
 		synchronized (stockSignals) {
 			ess = stockSignals.get(key);
 		}
-		if (ess != null)
-			return ess.getSignal(index);
+		if (ess != null) {
+			final SignalContainer<? extends SerieSignal> result = ess.getSignal(index);
+			if (result != null) {
+				return result;
+			}
+		}
 		return SignalContainer.empty(index);
 	}
 
