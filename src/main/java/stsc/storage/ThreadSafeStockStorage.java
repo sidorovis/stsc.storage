@@ -17,8 +17,8 @@ public class ThreadSafeStockStorage implements StockStorage {
 
 	@Override
 	public Optional<Stock> getStock(String name) {
-		StockLock stockLock = datafeed.get(name);
-		if (stockLock == null)
+		final StockLock stockLock = datafeed.get(name);
+		if (stockLockIsNull(stockLock))
 			return Optional.empty();
 		Stock stock = stockLock.getStock();
 		return Optional.of(stock);
@@ -26,12 +26,16 @@ public class ThreadSafeStockStorage implements StockStorage {
 
 	@Override
 	public void updateStock(Stock stock) {
-		String stockName = stock.getName();
-		StockLock stockLock = datafeed.get(stockName);
-		if (stockLock == null)
+		final String stockName = stock.getName();
+		final StockLock stockLock = datafeed.get(stockName);
+		if (stockLockIsNull(stockLock))
 			datafeed.put(stockName, new StockLock(stock));
 		else
 			stockLock.updateStock(stock);
+	}
+
+	private boolean stockLockIsNull(final StockLock stockLock) {
+		return stockLock == null;
 	}
 
 	@Override
