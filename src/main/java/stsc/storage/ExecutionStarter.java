@@ -18,6 +18,12 @@ import stsc.common.algorithms.StockExecution;
 import stsc.common.storage.SignalsStorage;
 import stsc.common.trading.Broker;
 
+/**
+ * Store executions into necessary (execution) order.<br/>
+ * This class provide possibility to start selected executions (algorithm
+ * instances) in the necessary order, so each execution will be able to use data
+ * from depended executions.
+ */
 public final class ExecutionStarter {
 
 	private final SignalsStorage signalsStorage = new SignalsStorageImpl();
