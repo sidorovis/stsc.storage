@@ -26,7 +26,7 @@ public class ThreadSafeStockStorage implements StockStorage {
 
 	@Override
 	public void updateStock(Stock stock) {
-		final String stockName = stock.getName();
+		final String stockName = stock.getInstrumentName();
 		final StockLock stockLock = datafeed.get(stockName);
 		if (stockLockIsNull(stockLock))
 			datafeed.put(stockName, new StockLock(stock));
