@@ -29,6 +29,11 @@ public class StockStorageMock implements StockStorage {
 
 	private static StockStorage stockStorage = null;
 
+	public synchronized static StockStorage reset() {
+		stockStorage = null;
+		return getStockStorage();
+	}
+
 	public synchronized static StockStorage getStockStorage() {
 		if (stockStorage == null) {
 			stockStorage = new ThreadSafeStockStorage();
