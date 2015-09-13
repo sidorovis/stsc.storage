@@ -4,18 +4,21 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.storage</artifactId>
-	<version>0.0.18-WEBINTERFACE</version>
+	<version>0.0.19-BOM</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.storage</name>
 	<url>https://github.com/sidorovis/stsc</url>
 
 	<properties>
-		<project.build.sourceEncoding>Cp1251</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
 	</properties>
 
 	<repositories>
+		<repository>
+			<id>stsc-bom-repository</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.bom/</url>
+		</repository>
 		<repository>
 			<id>stsc-common-mvn-repo</id>
 			<url>https://raw.github.com/sidorovis/stsc/stsc.common/</url>
@@ -37,6 +40,27 @@
 			<url>https://raw.github.com/sidorovis/stsc/stsc.algorithms.equity.test/</url>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>stsc</groupId>
+				<artifactId>stsc.bom</artifactId>
+				<version>0.0.19-BOM</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 
 	<build>
 		<defaultGoal>compile</defaultGoal>
@@ -65,9 +89,9 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.11</version>
+				<version>0.12</version>
 				<configuration>
-					<message>#2 Maven artifacts for ${project.version}</message>
+					<message>#2 update stsc.storage project version: ${project.version}</message>
 					<noJekyll>true</noJekyll>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<branch>refs/heads/stsc.storage</branch>
@@ -93,54 +117,43 @@
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.signals</artifactId>
-			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.algorithms.common</artifactId>
-			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.algorithms.fundamental.analysis</artifactId>
-			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
 			<artifactId>stsc.algorithms.equity.test</artifactId>
-			<version>0.0.18-WEBINTERFACE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>14.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.0-beta9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.0-beta9</version>
 		</dependency>
 
 	</dependencies>
