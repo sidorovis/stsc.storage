@@ -12,13 +12,11 @@ import stsc.common.storage.SignalsStorage;
 
 /**
  * @mark Thread Safe
- * 
  */
+public final class SignalsStorageImpl implements SignalsStorage {
 
-public class SignalsStorageImpl implements SignalsStorage {
-
-	private HashMap<String, SignalsSerie<SerieSignal>> stockSignals = new HashMap<>();
-	private HashMap<String, SignalsSerie<SerieSignal>> eodSignals = new HashMap<>();
+	final private HashMap<String, SignalsSerie<SerieSignal>> stockSignals = new HashMap<>();
+	final private HashMap<String, SignalsSerie<SerieSignal>> eodSignals = new HashMap<>();
 
 	public SignalsStorageImpl() {
 	}

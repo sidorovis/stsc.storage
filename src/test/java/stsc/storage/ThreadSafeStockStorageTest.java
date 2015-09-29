@@ -13,8 +13,8 @@ public class ThreadSafeStockStorageTest {
 
 	@Test
 	public void testThreadSafeMemoryStoskStorage() throws ClassNotFoundException, IOException, InterruptedException {
-		StockStorage stockStorage = new ThreadSafeStockStorage();
-		Stock stock = new MemoryStock("aapl");
+		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final Stock stock = new MemoryStock("aapl");
 		stockStorage.updateStock(stock);
 
 		Assert.assertFalse(stockStorage.getStock("nostock").isPresent());

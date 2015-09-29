@@ -12,12 +12,18 @@ import stsc.common.algorithms.EodExecution;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.trading.Broker;
 
-public class ExecutionsStorage implements Cloneable {
+/**
+ * This class is a storage for list of stock executions and list of eod
+ * executions.
+ */
+public final class ExecutionsStorage implements Cloneable {
 
-	private List<StockExecution> stockExecutions = new ArrayList<>();
-	private List<EodExecution> eodExecutions = new ArrayList<>();
+	final private List<StockExecution> stockExecutions;
+	final private List<EodExecution> eodExecutions;
 
 	public ExecutionsStorage() {
+		this.stockExecutions = new ArrayList<>();
+		this.eodExecutions = new ArrayList<>();
 	}
 
 	private ExecutionsStorage(final ExecutionsStorage cloneFrom) {
@@ -39,7 +45,7 @@ public class ExecutionsStorage implements Cloneable {
 		eodExecutions.add(execution);
 	}
 
-	public ExecutionStarter initialize(Broker broker) throws BadAlgorithmException {
+	public ExecutionStarter initialize(final Broker broker) throws BadAlgorithmException {
 		return new ExecutionStarter(broker, stockExecutions, eodExecutions);
 	}
 
@@ -93,6 +99,13 @@ public class ExecutionsStorage implements Cloneable {
 		return result;
 	}
 
+	/**
+	 * !!! Careful this method could / should be called once.<br/>
+	 * Generate {@link Output} executions for all existed stock executions. Add
+	 * generated executions to common stock executions list.
+	 * 
+	 * @return list of newly generated execution names.
+	 */
 	public List<String> generateOutForStocks() {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<StockExecution> initialList = new ArrayList<>(getStockExecutions());
@@ -106,6 +119,13 @@ public class ExecutionsStorage implements Cloneable {
 		return names;
 	}
 
+	/**
+	 * !!! Careful this method could / should be called once.<br/>
+	 * Generate {@link Output} executions for all existed eod executions. Add
+	 * generated executions to common eod executions list.
+	 * 
+	 * @return list of newly generated execution names.
+	 */
 	public List<String> generateOutForEods() {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<EodExecution> initialList = new ArrayList<>(getEodExecutions());
@@ -119,7 +139,7 @@ public class ExecutionsStorage implements Cloneable {
 		return names;
 	}
 
-	public static String outNameFor(String name) {
+	public static String outNameFor(final String name) {
 		return name + Settings.algorithmStaticPostfix;
 	}
 }

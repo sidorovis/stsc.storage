@@ -7,7 +7,7 @@ import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.StockAlgorithm;
 
-class StockAlgorithms {
+final class StockAlgorithms {
 	// execution name to stock algorithms
 	private final HashMap<String, StockAlgorithm> map = new HashMap<>();
 	private final ArrayList<StockAlgorithm> orderedAlgorithms = new ArrayList<>();

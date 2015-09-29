@@ -8,8 +8,14 @@ import stsc.common.stocks.Stock;
 import stsc.common.stocks.StockLock;
 import stsc.common.storage.StockStorage;
 
-public class ThreadSafeStockStorage implements StockStorage {
-	protected ConcurrentHashMap<String, StockLock> datafeed = new ConcurrentHashMap<String, StockLock>();
+/**
+ * This is thread safe {@link Stock} storage. (Do not store thread-safe Stock
+ * elements). But updateStock / getStock / getStockNames methods are thread
+ * safe.
+ */
+public final class ThreadSafeStockStorage implements StockStorage {
+
+	protected final ConcurrentHashMap<String, StockLock> datafeed = new ConcurrentHashMap<String, StockLock>();
 
 	public ThreadSafeStockStorage() {
 		super();
@@ -20,7 +26,7 @@ public class ThreadSafeStockStorage implements StockStorage {
 		final StockLock stockLock = datafeed.get(name);
 		if (stockLockIsNull(stockLock))
 			return Optional.empty();
-		Stock stock = stockLock.getStock();
+		final Stock stock = stockLock.getStock();
 		return Optional.of(stock);
 	}
 
