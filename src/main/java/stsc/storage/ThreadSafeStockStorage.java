@@ -11,9 +11,10 @@ import stsc.common.storage.StockStorage;
 /**
  * This is thread safe {@link Stock} storage. (Do not store thread-safe Stock
  * elements). But updateStock / getStock / getStockNames methods are thread
- * safe.
+ * safe.<br/>
+ * This storage used as base class for another thread-safe stock storages.
  */
-public final class ThreadSafeStockStorage implements StockStorage {
+public class ThreadSafeStockStorage implements StockStorage {
 
 	protected final ConcurrentHashMap<String, StockLock> datafeed = new ConcurrentHashMap<String, StockLock>();
 
@@ -22,7 +23,7 @@ public final class ThreadSafeStockStorage implements StockStorage {
 	}
 
 	@Override
-	public Optional<Stock> getStock(String name) {
+	public Optional<Stock> getStock(final String name) {
 		final StockLock stockLock = datafeed.get(name);
 		if (stockLockIsNull(stockLock))
 			return Optional.empty();
@@ -31,7 +32,7 @@ public final class ThreadSafeStockStorage implements StockStorage {
 	}
 
 	@Override
-	public void updateStock(Stock stock) {
+	public void updateStock(final Stock stock) {
 		final String stockName = stock.getInstrumentName();
 		final StockLock stockLock = datafeed.get(stockName);
 		if (stockLockIsNull(stockLock))
@@ -40,12 +41,13 @@ public final class ThreadSafeStockStorage implements StockStorage {
 			stockLock.updateStock(stock);
 	}
 
-	private boolean stockLockIsNull(final StockLock stockLock) {
-		return stockLock == null;
-	}
-
 	@Override
 	public Set<String> getStockNames() {
 		return datafeed.keySet();
 	}
+
+	private boolean stockLockIsNull(final StockLock stockLock) {
+		return stockLock == null;
+	}
+
 }
