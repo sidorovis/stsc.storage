@@ -33,12 +33,16 @@ public final class StockStorageFactory {
 	}
 
 	public StockStorage createStockStorage(final Set<String> stockNames, final String filterDataFolderPath) throws ClassNotFoundException, IOException, InterruptedException {
-		final Path dataFolder = FileSystems.getDefault().getPath(filterDataFolderPath);
+		return createStockStorage(stockNames, FileSystems.getDefault().getPath(filterDataFolderPath));
+	}
+
+	public StockStorage createStockStorage(final Set<String> stockNames, final Path filterDataPath) throws ClassNotFoundException, IOException, InterruptedException {
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		for (String name : stockNames) {
-			final String path = dataFolder.resolve(name + UnitedFormatStock.EXTENSION).toString();
+			final String path = filterDataPath.resolve(name + UnitedFormatStock.EXTENSION).toString();
 			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(path));
 		}
 		return stockStorage;
 	}
+
 }
