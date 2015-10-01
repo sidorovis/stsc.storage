@@ -1,7 +1,7 @@
 package stsc.storage.mocks;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import stsc.common.stocks.UnitedFormatStock;
@@ -14,8 +14,8 @@ import stsc.storage.ThreadSafeStockStorage;
  */
 public final class StockStorageMock {
 
-	final static private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(StockStorageMock.class.getResource(resourcePath).toURI()).getAbsolutePath();
+	final static private InputStream resourceToPath(final String resourcePath) throws URISyntaxException {
+		return StockStorageMock.class.getResourceAsStream(resourcePath);
 	}
 
 	/**
