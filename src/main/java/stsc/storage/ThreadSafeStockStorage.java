@@ -13,6 +13,8 @@ import stsc.common.storage.StockStorage;
  * elements). But updateStock / getStock / getStockNames methods are thread
  * safe.<br/>
  * This storage used as base class for another thread-safe stock storages.
+ * 
+ * @mark Read-Write {@link StockStorage}.
  */
 public class ThreadSafeStockStorage implements StockStorage {
 

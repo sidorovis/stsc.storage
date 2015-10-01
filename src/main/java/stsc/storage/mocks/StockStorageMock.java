@@ -9,9 +9,8 @@ import stsc.common.storage.StockStorage;
 import stsc.storage.ThreadSafeStockStorage;
 
 /**
- * Singleton Mock for testing or small development related tasks (when you would
- * like to debug some algorithm ot whatever).
- * 
+ * Mock for testing or development related tasks (when you would like to debug
+ * some algorithm or whatever).
  */
 public final class StockStorageMock {
 

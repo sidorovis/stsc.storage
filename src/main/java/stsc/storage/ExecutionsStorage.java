@@ -13,8 +13,8 @@ import stsc.common.algorithms.StockExecution;
 import stsc.common.trading.Broker;
 
 /**
- * This class is a storage for list of stock executions and list of eod
- * executions.
+ * Storage for list of stock executions and list of end-of-day executions.<br/>
+ * Used for simulation initialization process.
  */
 public final class ExecutionsStorage implements Cloneable {
 

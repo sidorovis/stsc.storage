@@ -11,7 +11,32 @@ import stsc.common.signals.SerieSignal;
 import stsc.common.storage.SignalsStorage;
 
 /**
- * @mark Thread Safe
+ * Storage for signals from all algorithms that was executed by one simulation.
+ * Used for simulation, provide possibility to store and retrieve signals from
+ * algorithms and by algorithms. (Also by management code afterwards for tests /
+ * testing executions and etc.) <br/>
+ * <u>Use case</u><br/>
+ * 1. Register new serie for algorithm by: <br/>
+ * 1.a. registerStockAlgorithmSerie(...); <br/>
+ * 1.b. registerEodAlgorithmSerie(...). <br/>
+ * This series represents (encapsulate mechanism that store signal serie
+ * (array)). For example it could be ArrayList<SignalType>, Map<Date,
+ * SignalType>. For more information you can look for {@link SignalsSerie}
+ * class. <br/>
+ * 2. add signals (register signals) from algorithms by: <br/>
+ * 2.a. addStockSignal(...); <br/>
+ * 2.b. addEodSignal(...). <br/>
+ * 3. retrieve / get signals (additional information about signals for serie)
+ * from storage using: <br/>
+ * 3.a. getStockSignal(...); by date <br/>
+ * 3.b. getStockSignal(...); by index <br/>
+ * 3.c. getIndexSize(...) - last index value for stock execution <br/>
+ * 3.d. getEodSignal(...); by date <br/>
+ * 3.e. getEodSignal(...); by index <br/>
+ * 3.f. getIndexSize(...) - last index value for end-of-day execution. <br/>
+ * 
+ * @mark Thread Safe for some reason :), probably should not because simulation
+ *       is one-thread process.
  */
 public final class SignalsStorageImpl implements SignalsStorage {
 

@@ -6,7 +6,11 @@ import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.StockAlgorithm;
 
-class StockNameToAlgorithms {
+/**
+ * Represents full storage for stock algorithms used by {@link ExecutionStarter}
+ * 
+ */
+final class StockNameToAlgorithms {
 	// stock name to execution map
 	private HashMap<String, StockAlgorithms> stockToAlgorithm = new HashMap<>();
 

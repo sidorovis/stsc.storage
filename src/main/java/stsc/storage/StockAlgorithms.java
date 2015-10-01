@@ -7,6 +7,18 @@ import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.StockAlgorithm;
 
+/**
+ * Internal for {@link ExecutionStarter} / {@link StockNameToAlgorithms}
+ * structure that store stock algorithms. <br/>
+ * <u> Represents bunch of instances of algorithms (executions) for one
+ * stock.</u><br/>
+ * Provide possibility to populate itself with stock algorithms, automatically
+ * sort execution name.<br/>
+ * Also provide possibility to execute simulation for all stored algorithms in
+ * the order how they was added to {@link StockAlgorithms}. IUt required to give
+ * user possibility execute algorithms into order that he defined in
+ * configuration file. <br/>
+ */
 final class StockAlgorithms {
 	// execution name to stock algorithms
 	private final HashMap<String, StockAlgorithm> map = new HashMap<>();

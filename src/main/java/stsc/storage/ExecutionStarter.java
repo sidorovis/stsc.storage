@@ -76,9 +76,9 @@ public final class ExecutionStarter {
 	}
 
 	public Optional<StockAlgorithm> getStockAlgorithm(final String executionName, final String stockName) {
-		final StockAlgorithms e = stockAlgorithms.getStockToAlgorithm().get(stockName);
-		if (e != null)
-			return Optional.ofNullable(e.getMap().get(executionName));
+		final StockAlgorithms sa = stockAlgorithms.getStockToAlgorithm().get(stockName);
+		if (sa != null)
+			return Optional.ofNullable(sa.getMap().get(executionName));
 		return Optional.empty();
 	}
 
