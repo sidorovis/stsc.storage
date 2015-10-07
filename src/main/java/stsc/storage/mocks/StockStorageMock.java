@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 
+import stsc.common.stocks.UnitedFormatHelper;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.StockStorage;
 import stsc.storage.ThreadSafeStockStorage;
@@ -25,9 +26,9 @@ public final class StockStorageMock {
 	public synchronized static StockStorage getStockStorage() {
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		try {
-			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf")));
-			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath("adm.uf")));
-			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath("spy.uf")));
+			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem("aapl").getFilename())));
+			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem("adm").getFilename())));
+			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem("spy").getFilename())));
 		} catch (IOException | URISyntaxException e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -41,7 +42,7 @@ public final class StockStorageMock {
 	public synchronized static StockStorage getStockStorageFor(final String stockName) {
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		try {
-			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(stockName + UnitedFormatStock.EXTENSION)));
+			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem(stockName).getFilename())));
 		} catch (IOException | URISyntaxException e) {
 			throw new RuntimeException(e.getMessage());
 		}
