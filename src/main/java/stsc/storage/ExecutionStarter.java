@@ -34,8 +34,7 @@ public final class ExecutionStarter {
 
 	private final String hashCode;
 
-	ExecutionStarter(Broker broker, List<StockExecution> stockExecutions, List<EodExecution> eodExecutions) throws BadAlgorithmException {
-		final Set<String> stockNames = broker.getStockStorage().getStockNames();
+	ExecutionStarter(Broker broker, Set<String> stockNames, List<StockExecution> stockExecutions, List<EodExecution> eodExecutions) throws BadAlgorithmException {
 		for (StockExecution execution : stockExecutions) {
 			for (String stockName : stockNames) {
 				final StockAlgorithm algo = execution.getInstance(stockName, signalsStorage);

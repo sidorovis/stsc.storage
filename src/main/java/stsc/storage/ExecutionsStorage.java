@@ -2,6 +2,7 @@ package stsc.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import stsc.algorithms.AlgorithmSettingsImpl;
 import stsc.algorithms.EodOutput;
@@ -45,8 +46,8 @@ public final class ExecutionsStorage implements Cloneable {
 		eodExecutions.add(execution);
 	}
 
-	public ExecutionStarter initialize(final Broker broker) throws BadAlgorithmException {
-		return new ExecutionStarter(broker, stockExecutions, eodExecutions);
+	public ExecutionStarter initialize(final Broker broker, final Set<String> stockNames) throws BadAlgorithmException {
+		return new ExecutionStarter(broker, stockNames, stockExecutions, eodExecutions);
 	}
 
 	public String stringHashCode() {
