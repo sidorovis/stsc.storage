@@ -33,7 +33,6 @@ public class ThreadSafeStockStorage implements StockStorage {
 		return Optional.of(stock);
 	}
 
-	@Override
 	public void updateStock(final Stock stock) {
 		final String stockName = stock.getInstrumentName();
 		final StockLock stockLock = datafeed.get(stockName);

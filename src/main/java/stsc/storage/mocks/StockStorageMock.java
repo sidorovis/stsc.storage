@@ -24,7 +24,7 @@ public final class StockStorageMock {
 	 *         'spy' stocks in it.
 	 */
 	public synchronized static StockStorage getStockStorage() {
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		try {
 			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem("aapl").getFilename())));
 			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem("adm").getFilename())));
@@ -40,7 +40,7 @@ public final class StockStorageMock {
 	 *         stock (available stocks are: aapl / adm / spy).
 	 */
 	public synchronized static StockStorage getStockStorageFor(final String stockName) {
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		try {
 			stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(resourceToPath(UnitedFormatHelper.toFilesystem(stockName).getFilename())));
 		} catch (IOException | URISyntaxException e) {

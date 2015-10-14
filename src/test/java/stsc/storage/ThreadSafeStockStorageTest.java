@@ -7,13 +7,12 @@ import org.junit.Test;
 
 import stsc.common.stocks.MemoryStock;
 import stsc.common.stocks.Stock;
-import stsc.common.storage.StockStorage;
 
 public class ThreadSafeStockStorageTest {
 
 	@Test
 	public void testThreadSafeMemoryStoskStorage() throws ClassNotFoundException, IOException, InterruptedException {
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		final Stock stock = new MemoryStock("aapl");
 		stockStorage.updateStock(stock);
 
