@@ -7,7 +7,7 @@ import java.util.Set;
 import stsc.algorithms.AlgorithmSettingsImpl;
 import stsc.algorithms.EodOutput;
 import stsc.algorithms.Output;
-import stsc.common.Settings;
+import stsc.common.algorithms.AlgorithmNameGenerator;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
 import stsc.common.algorithms.StockExecution;
@@ -115,7 +115,7 @@ public final class ExecutionsStorage implements Cloneable {
 			final String executionName = stockExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
-			stockExecutions.add(new StockExecution(outNameFor(executionName), Output.class, as));
+			stockExecutions.add(new StockExecution(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), Output.class, as));
 		}
 		return names;
 	}
@@ -135,12 +135,9 @@ public final class ExecutionsStorage implements Cloneable {
 			final String executionName = eodExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
-			eodExecutions.add(new EodExecution(outNameFor(executionName), EodOutput.class, as));
+			eodExecutions.add(new EodExecution(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), EodOutput.class, as));
 		}
 		return names;
 	}
 
-	public static String outNameFor(final String name) {
-		return name + Settings.algorithmStaticPostfix;
-	}
 }
