@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.EodOutput;
 import stsc.algorithms.Output;
 import stsc.common.algorithms.AlgorithmNameGenerator;
@@ -110,7 +110,7 @@ public final class ExecutionsStorage implements Cloneable {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<StockExecution> initialList = new ArrayList<>(getStockExecutions());
 		for (StockExecution stockExecution : initialList) {
-			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
+			final AlgorithmConfigurationImpl as = new AlgorithmConfigurationImpl();
 			final String executionName = stockExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
@@ -129,7 +129,7 @@ public final class ExecutionsStorage implements Cloneable {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<EodExecution> initialList = new ArrayList<>(getEodExecutions());
 		for (EodExecution eodExecution : initialList) {
-			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
+			final AlgorithmConfigurationImpl as = new AlgorithmConfigurationImpl();
 			final String executionName = eodExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
