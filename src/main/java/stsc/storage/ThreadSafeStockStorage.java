@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import stsc.common.stocks.Stock;
-import stsc.common.stocks.StockLock;
 import stsc.common.storage.StockStorage;
 
 /**
