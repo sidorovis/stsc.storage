@@ -102,8 +102,7 @@ public final class ExecutionsStorage implements Cloneable {
 
 	/**
 	 * !!! Careful this method could / should be called once.<br/>
-	 * Generate {@link Output} executions for all existed stock executions. Add
-	 * generated executions to common stock executions list.
+	 * Generate {@link Output} executions for all existed stock executions. Add generated executions to common stock executions list.
 	 * 
 	 * @return list of newly generated execution names.
 	 */
@@ -111,7 +110,7 @@ public final class ExecutionsStorage implements Cloneable {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<StockExecution> initialList = new ArrayList<>(getStockExecutions());
 		for (StockExecution stockExecution : initialList) {
-			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl(stockExecution.getSettings().getPeriod());
+			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
 			final String executionName = stockExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
@@ -122,8 +121,7 @@ public final class ExecutionsStorage implements Cloneable {
 
 	/**
 	 * !!! Careful this method could / should be called once.<br/>
-	 * Generate {@link Output} executions for all existed eod executions. Add
-	 * generated executions to common eod executions list.
+	 * Generate {@link Output} executions for all existed eod executions. Add generated executions to common eod executions list.
 	 * 
 	 * @return list of newly generated execution names.
 	 */
@@ -131,7 +129,7 @@ public final class ExecutionsStorage implements Cloneable {
 		final ArrayList<String> names = new ArrayList<>();
 		final ArrayList<EodExecution> initialList = new ArrayList<>(getEodExecutions());
 		for (EodExecution eodExecution : initialList) {
-			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl(eodExecution.getSettings().getPeriod());
+			final AlgorithmSettingsImpl as = new AlgorithmSettingsImpl();
 			final String executionName = eodExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
