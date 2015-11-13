@@ -15,10 +15,8 @@ import stsc.common.algorithms.EodAlgorithm;
 import stsc.common.algorithms.StockAlgorithm;
 
 /**
- * Store {@link StockAlgorithm}s and {@link EodAlgorithm}s loading them with
- * reflection (ClassLoader.getSystemClassLoader()). Default package to search:
- * stsc.algorithm, feel free to instance that with any different package.
- * 
+ * Store {@link StockAlgorithm}s and {@link EodAlgorithm}s loading them with reflection (ClassLoader.getSystemClassLoader()). <br/>
+ * Default package to search: stsc.algorithm, feel free to instance that with any different package.
  */
 public final class AlgorithmsStorage {
 
@@ -106,7 +104,7 @@ public final class AlgorithmsStorage {
 		final String lowCase = algorithmName.toLowerCase();
 		Class<? extends T> result = null;
 		for (Map.Entry<String, Class<? extends T>> i : algorithmsMap.entrySet()) {
-			if (i.getKey().contains(lowCase)) {
+			if (i.getKey().endsWith(lowCase)) {
 				if (result == null) {
 					result = i.getValue();
 				} else {
