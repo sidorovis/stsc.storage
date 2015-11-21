@@ -1,10 +1,9 @@
 package stsc.storage;
 
-import java.util.regex.Pattern;
-
 import org.junit.Assert;
 import org.junit.Test;
 
+import stsc.algorithms.indices.primitive.stock.SeveralLastMin;
 import stsc.common.algorithms.BadAlgorithmException;
 
 public class AlgorithmsStorageTest {
@@ -19,14 +18,7 @@ public class AlgorithmsStorageTest {
 		Assert.assertNull(ans.getEod(".TestingEodAlgorithm"));
 		Assert.assertNull(ans.getStock("StockAlgorithmHelper"));
 		Assert.assertNotNull(ans.getEod("SimpleTradingAlgorithm"));
-
-		try {
-			ans.getStock("IN");
-			Assert.fail("For 'IN' we could assume to find several algorithms.");
-		} catch (BadAlgorithmException e) {
-			Assert.assertTrue(Pattern.matches("For 'IN' we could assume:stsc.algorithms.indices.(.+).stock.(.+) or stsc.algorithms.indices.(.+).stock.(.+)",
-					e.getMessage()));
-		}
+		Assert.assertEquals(ans.getStock("IN").getName(), SeveralLastMin.class.getName());
 	}
 
 	@Test
