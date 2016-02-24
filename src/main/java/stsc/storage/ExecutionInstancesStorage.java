@@ -8,93 +8,93 @@ import stsc.algorithms.EodOutput;
 import stsc.algorithms.Output;
 import stsc.common.algorithms.AlgorithmNameGenerator;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.EodExecution;
+import stsc.common.algorithms.EodExecutionInstance;
 import stsc.common.algorithms.MutableAlgorithmConfiguration;
-import stsc.common.algorithms.StockExecution;
+import stsc.common.algorithms.StockExecutionInstance;
 import stsc.common.trading.Broker;
 
 /**
  * Storage for list of stock executions and list of end-of-day executions.<br/>
  * Used for simulation initialization process.
  */
-public final class ExecutionsStorage implements Cloneable {
+public final class ExecutionInstancesStorage implements Cloneable {
 
-	final private List<StockExecution> stockExecutions;
-	final private List<EodExecution> eodExecutions;
+	final private List<StockExecutionInstance> stockExecutions;
+	final private List<EodExecutionInstance> eodExecutions;
 
-	public ExecutionsStorage() {
+	public ExecutionInstancesStorage() {
 		this.stockExecutions = new ArrayList<>();
 		this.eodExecutions = new ArrayList<>();
 	}
 
-	private ExecutionsStorage(final ExecutionsStorage cloneFrom) {
+	private ExecutionInstancesStorage(final ExecutionInstancesStorage cloneFrom) {
 		this.stockExecutions = new ArrayList<>(cloneFrom.stockExecutions.size());
-		for (StockExecution se : cloneFrom.stockExecutions) {
+		for (StockExecutionInstance se : cloneFrom.stockExecutions) {
 			this.stockExecutions.add(se.clone());
 		}
 		this.eodExecutions = new ArrayList<>(cloneFrom.eodExecutions.size());
-		for (EodExecution ee : cloneFrom.eodExecutions) {
+		for (EodExecutionInstance ee : cloneFrom.eodExecutions) {
 			this.eodExecutions.add(ee.clone());
 		}
 	}
 
-	public void addStockExecution(StockExecution execution) {
+	public void addStockExecution(StockExecutionInstance execution) {
 		stockExecutions.add(execution);
 	}
 
-	public void addEodExecution(EodExecution execution) {
+	public void addEodExecution(EodExecutionInstance execution) {
 		eodExecutions.add(execution);
 	}
 
-	public ExecutionStarter initialize(final Broker broker, final Set<String> stockNames) throws BadAlgorithmException {
-		return new ExecutionStarter(broker, stockNames, stockExecutions, eodExecutions);
+	public ExecutionInstanceProcessor initialize(final Broker broker, final Set<String> stockNames) throws BadAlgorithmException {
+		return new ExecutionInstanceProcessor(broker, stockNames, stockExecutions, eodExecutions);
 	}
 
 	public String stringHashCode() {
 		final StringBuilder sb = new StringBuilder();
-		for (StockExecution se : stockExecutions) {
+		for (StockExecutionInstance se : stockExecutions) {
 			se.stringHashCode(sb);
 		}
-		for (EodExecution ee : eodExecutions) {
+		for (EodExecutionInstance ee : eodExecutions) {
 			ee.stringHashCode(sb);
 		}
 		return sb.toString();
 	}
 
-	public List<StockExecution> getStockExecutions() {
+	public List<StockExecutionInstance> getStockExecutions() {
 		return stockExecutions;
 	}
 
-	public List<EodExecution> getEodExecutions() {
+	public List<EodExecutionInstance> getEodExecutions() {
 		return eodExecutions;
 	}
 
 	@Override
-	public ExecutionsStorage clone() {
-		return new ExecutionsStorage(this);
+	public ExecutionInstancesStorage clone() {
+		return new ExecutionInstancesStorage(this);
 	}
 
 	@Override
 	public String toString() {
 		String result = "";
 		result += "StockExecutions = ";
-		for (StockExecution se : stockExecutions) {
+		for (StockExecutionInstance se : stockExecutions) {
 			result += se.getExecutionName();
 			if (se != stockExecutions.get(stockExecutions.size() - 1))
 				result += ", ";
 		}
 		result += "\n";
-		for (StockExecution se : stockExecutions) {
+		for (StockExecutionInstance se : stockExecutions) {
 			result += se.toString() + "\n";
 		}
 		result += "EodExecutions = ";
-		for (EodExecution ee : eodExecutions) {
+		for (EodExecutionInstance ee : eodExecutions) {
 			result += ee.getExecutionName();
 			if (ee != eodExecutions.get(eodExecutions.size() - 1))
 				result += ", ";
 		}
 		result += "\n";
-		for (EodExecution se : eodExecutions) {
+		for (EodExecutionInstance se : eodExecutions) {
 			result += se.toString() + "\n";
 		}
 		return result;
@@ -108,13 +108,13 @@ public final class ExecutionsStorage implements Cloneable {
 	 */
 	public List<String> generateOutForStocks() {
 		final ArrayList<String> names = new ArrayList<>();
-		final ArrayList<StockExecution> initialList = new ArrayList<>(getStockExecutions());
-		for (StockExecution stockExecution : initialList) {
+		final ArrayList<StockExecutionInstance> initialList = new ArrayList<>(getStockExecutions());
+		for (StockExecutionInstance stockExecution : initialList) {
 			final MutableAlgorithmConfiguration as = stockExecution.getSettings().createAlgorithmConfiguration();
 			final String executionName = stockExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
-			stockExecutions.add(new StockExecution(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), Output.class, as));
+			stockExecutions.add(new StockExecutionInstance(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), Output.class, as));
 		}
 		return names;
 	}
@@ -127,13 +127,13 @@ public final class ExecutionsStorage implements Cloneable {
 	 */
 	public List<String> generateOutForEods() {
 		final ArrayList<String> names = new ArrayList<>();
-		final ArrayList<EodExecution> initialList = new ArrayList<>(getEodExecutions());
-		for (EodExecution eodExecution : initialList) {
+		final ArrayList<EodExecutionInstance> initialList = new ArrayList<>(getEodExecutions());
+		for (EodExecutionInstance eodExecution : initialList) {
 			final MutableAlgorithmConfiguration as = eodExecution.getSettings().createAlgorithmConfiguration();
 			final String executionName = eodExecution.getExecutionName();
 			as.addSubExecutionName(executionName);
 			names.add(executionName);
-			eodExecutions.add(new EodExecution(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), EodOutput.class, as));
+			eodExecutions.add(new EodExecutionInstance(AlgorithmNameGenerator.generateOutAlgorithmName(executionName), EodOutput.class, as));
 		}
 		return names;
 	}

@@ -12,9 +12,9 @@ import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodAlgorithm;
-import stsc.common.algorithms.EodExecution;
+import stsc.common.algorithms.EodExecutionInstance;
 import stsc.common.algorithms.StockAlgorithm;
-import stsc.common.algorithms.StockExecution;
+import stsc.common.algorithms.StockExecutionInstance;
 import stsc.common.storage.SignalsStorage;
 import stsc.common.trading.Broker;
 
@@ -24,7 +24,7 @@ import stsc.common.trading.Broker;
  * instances) in the necessary order, so each execution will be able to use data
  * from depended executions.
  */
-public final class ExecutionStarter {
+public final class ExecutionInstanceProcessor {
 
 	private final SignalsStorage signalsStorage = new SignalsStorageImpl();
 
@@ -34,14 +34,14 @@ public final class ExecutionStarter {
 
 	private final String hashCode;
 
-	ExecutionStarter(Broker broker, Set<String> stockNames, List<StockExecution> stockExecutions, List<EodExecution> eodExecutions) throws BadAlgorithmException {
-		for (StockExecution execution : stockExecutions) {
+	ExecutionInstanceProcessor(Broker broker, Set<String> stockNames, List<StockExecutionInstance> stockExecutions, List<EodExecutionInstance> eodExecutions) throws BadAlgorithmException {
+		for (StockExecutionInstance execution : stockExecutions) {
 			for (String stockName : stockNames) {
 				final StockAlgorithm algo = execution.getInstance(stockName, signalsStorage);
 				stockAlgorithms.addExecutionOnStock(stockName, execution.getExecutionName(), algo);
 			}
 		}
-		for (EodExecution execution : eodExecutions) {
+		for (EodExecutionInstance execution : eodExecutions) {
 			final EodAlgorithm algo = execution.getInstance(broker, signalsStorage);
 			tradeAlgorithms.add(algo);
 			tradeNameToAlgorithms.put(execution.getExecutionName(), algo);
@@ -91,12 +91,12 @@ public final class ExecutionStarter {
 				+ Integer.toString(stockAlgorithms.size());
 	}
 
-	private String generateHashCode(List<StockExecution> stockExecutions, List<EodExecution> eodExecutions) {
+	private String generateHashCode(List<StockExecutionInstance> stockExecutions, List<EodExecutionInstance> eodExecutions) {
 		final StringBuilder sb = new StringBuilder();
-		for (StockExecution se : stockExecutions) {
+		for (StockExecutionInstance se : stockExecutions) {
 			se.stringHashCode(sb);
 		}
-		for (EodExecution ee : eodExecutions) {
+		for (EodExecutionInstance ee : eodExecutions) {
 			ee.stringHashCode(sb);
 		}
 		return sb.toString();

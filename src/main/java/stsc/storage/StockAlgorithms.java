@@ -8,7 +8,7 @@ import stsc.common.Day;
 import stsc.common.algorithms.StockAlgorithm;
 
 /**
- * Internal for {@link ExecutionStarter} / {@link StockNameToAlgorithms}
+ * Internal for {@link ExecutionInstanceProcessor} / {@link StockNameToAlgorithms}
  * structure that store stock algorithms. <br/>
  * <u> Represents bunch of instances of algorithms (executions) for one
  * stock.</u><br/>

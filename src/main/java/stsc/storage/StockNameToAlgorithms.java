@@ -7,7 +7,7 @@ import stsc.common.Day;
 import stsc.common.algorithms.StockAlgorithm;
 
 /**
- * Represents full storage for stock algorithms used by {@link ExecutionStarter}
+ * Represents full storage for stock algorithms used by {@link ExecutionInstanceProcessor}
  * 
  */
 final class StockNameToAlgorithms {
